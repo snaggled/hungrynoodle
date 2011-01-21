@@ -2,14 +2,14 @@ require 'rubygems'
 require 'find'   
 require 'sqlite3'       
 require 'fileutils'      
-require 'nokogiri'   
 require 'logger'
            
 # This class provides a simple mechanism to find and cache a list 
-# of files on your system (much like slocate). It is configured by thge 
-# associated hungrynoodle.xml file - and expects only 2 parameters:
-# * <dir>The directory to be searched/cached</dir>
-# * <regex>The regular expression detailing the files to be cached</regex>   
+# of files on your system (much like slocate). It expects only 3 parameters:
+# * db_name - The name of the sqlite database to create/use
+# * logfile - The name of the logfile to use
+# * dir - The directory to be searched/cached
+# * regex - The regular expression detailing the files to be cached   
 # The class uses sqlite3 by default for storage of its information and logs
 # debug information to hungrynoodle.txt
 # Author::    Philip Mcmahon  (mailto:philip@packetnode.com)
@@ -19,12 +19,18 @@ require 'logger'
 class HungryNoodle                 
   include ObjectSpace
          
-  # Initialize. db_name refers to the name of the sqlite database
-  def initialize(db_name = "file_cache.db")       
+  # Initialize. 
+  # * db_name - The name of the sqlite database to create/use     
+  # * logfile - The name of the logfile to use
+  # * dir - The directory to be searched/cached
+  # * regex - The regular expression detailing the files to be cached
+  def initialize(db_name = "/tmp/hungrynoodle.db", 
+                 logfile = "/tmp/hungrynoodle.txt", 
+                 dir = ".", 
+                 regex = "\.*$")       
     @dirs = []     
-    @log = Logger.new('hungrynoodle.txt')
+    @log = Logger.new(logfile)
     @db = SQLite3::Database.open(db_name)        
-    #@db.execute("drop table files")
     @db.execute("create table if not exists files(
                                       id integer primary key autoincrement, 
                                       basename varchar, 
@@ -35,11 +41,8 @@ class HungryNoodle
                                       extname varchar,
                                       mtime datetime,
                                       size integer)") 
-    f = File.open("hungrynoodle.xml")
-    doc = Nokogiri::XML(f)    
-    @dirs << doc.xpath("//dir").children.first.text     
-    @regex = Regexp.compile(doc.xpath("//regex").children.first.text)
-    f.close       
+    @dirs << dir   
+    @regex = Regexp.compile(regex)
     define_finalizer(self, proc { @db.close; @log.close })
   end  
        
@@ -106,8 +109,8 @@ class HungryNoodle
 end       
 
 # __main__
-file_cache = HungryNoodle.new
-file_cache.find_and_insert
+hungrynoodle = HungryNoodle.new
+hungrynoodle.find_and_insert
 
                  
 
