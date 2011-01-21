@@ -1,10 +1,13 @@
-# This class provides a simple mechanism to find and cache a list 
-# of files on your system (much like slocate). It is configured by thge 
-# associated hungrynoodle.xml file - and expects only 2 parameters:
-# * <dir>The directory to be searched/cached</dir>
-# * <regex>The regular expression detailing the files to be cached</regex>   
-# The class uses sqlite3 by default for storage of its information and logs
-# debug information to hungrynoodle.txt
-# Author::    Philip Mcmahon  (mailto:philip@packetnode.com)
-# Copyright:: Copyright (c) 2011 Packetnode, LLC
-# License::   Distributes under the same terms as Ruby
+This class provides a simple mechanism to find and cache a list 
+of files on your system (much like slocate). It is configured by thge 
+associated hungrynoodle.xml file - and expects only 2 parameters:
+
+* <dir>The directory to be searched/cached</dir>
+* <regex>The regular expression detailing the files to be cached</regex>   
+
+The class uses sqlite3 by default for storage of its information and logs
+debug information to hungrynoodle.txt
+
+* Author::    Philip Mcmahon  (mailto:philip@packetnode.com)
+* Copyright:: Copyright (c) 2011 Packetnode, LLC
+* License::   Distributes under the same terms as Ruby
