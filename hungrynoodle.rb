@@ -108,9 +108,3 @@ class HungryNoodle
    end  
 end       
 
-# __main__
-hungrynoodle = HungryNoodle.new
-hungrynoodle.find_and_insert
-
-                 
-
