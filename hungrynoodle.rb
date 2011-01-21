@@ -24,10 +24,11 @@ class HungryNoodle
   # * logfile - The name of the logfile to use
   # * dir - The directory to be searched/cached
   # * regex - The regular expression detailing the files to be cached
-  def initialize(db_name = "/tmp/hungrynoodle.db", 
-                 logfile = "/tmp/hungrynoodle.txt", 
-                 dir = ".", 
-                 regex = "\.*$")       
+  def initialize(dir = ".",
+                 regex = "\.*$", 
+                 db_name = "/tmp/hungrynoodle.db", 
+                 logfile = "/tmp/hungrynoodle.txt" 
+                 )       
     @dirs = []     
     @log = Logger.new(logfile)
     @db = SQLite3::Database.open(db_name)        
