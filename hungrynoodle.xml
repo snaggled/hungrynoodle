@@ -1,0 +1,8 @@
+<hungrynoodle> 
+  <datasource>
+    <files>
+      <dir>.</dir>         
+      <regex>\.*$</regex>
+    </files>
+  </datasource>
+</hungrynoodle>
