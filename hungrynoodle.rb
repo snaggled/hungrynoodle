@@ -71,7 +71,22 @@ class HungryNoodle
                                      '#{File.mtime(file)}', 
                                      '#{File.size(file)}')") 
      end
-   end   
+   end       
+     
+   # Provides a simple pass-thru mechansim for SQL to the underlying db
+   def execute(sql)                                                    
+     @db.execute(sql)
+   end      
+   
+   # Return a flattened list of basenames
+   def basenames
+     @db.execute("select basename from files").flatten!
+   end
+   
+   # Return file details for a given basename
+   def file(basename)
+     @db.execute("select * from files where basename = '#{basename}'") 
+   end     
              
    # Does this file exists in the cache ? This method performs a lookup
    # based on filename and size. If a matching file is found, the contents
