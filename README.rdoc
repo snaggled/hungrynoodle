@@ -1,5 +1,5 @@
 This class provides a simple mechanism to find and cache a list 
-of files on your system (much like slocate). It is configured by thge 
+of files on your system (much like slocate). It is configured by the 
 associated hungrynoodle.xml file - and expects only 2 parameters:
 
 * <dir>The directory to be searched/cached</dir>
